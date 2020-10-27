@@ -8,15 +8,17 @@ function formatSpots(spots) {
 
 
 export default function DayListItem(props) {
+  const { selected, spots, setDay, name } = props;
+
 
   const itemClass = classNames('day-list__item', {
-    'day-list__item--selected': props.selected,
-    'day-list__item--full': !props.spots
+    'day-list__item--selected': selected,
+    'day-list__item--full': !spots
   });
   return (
-    <li className={itemClass} onClick={props.setDay}>
-      <h2 className="text--regular">{props.name}</h2> 
-      <h3 className="text--light">{formatSpots(props.spots)}</h3>
+    <li className={itemClass} onClick={setDay}>
+      <h2 className="text--regular">{name}</h2> 
+      <h3 className="text--light">{formatSpots(spots)}</h3>
     </li>
   );
 }
