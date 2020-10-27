@@ -1,18 +1,17 @@
 import React from "react";
-
 import "components/Button.scss";
 import { action } from "@storybook/addon-actions/dist/preview";
+const classNames = require('classnames');
+
 
 export default function Button(props) {
-  let buttonClass = "button";
-
-  if (props.confirm) {
-    buttonClass += " button--confirm";
+  
+  const classFromProps = {
+    ' button--confirm': props.confirm,
+    ' button--danger': props.danger
   }
+  let buttonClass = classNames('button', classFromProps);
 
-  if (props.danger) {
-    buttonClass += " button--danger";
-  }
 
   return (
     <button
