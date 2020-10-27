@@ -8,9 +8,8 @@ export default function DayList(props) {
   const { days, day, setDay } = props;
    
   const renderDays = days.map(({ id, name, spots }) => {
-    const selected = day === name;
     const passProps = {
-      selected,
+      selected: day === name,
       name, 
       setDay,
       key:id,
