@@ -17,6 +17,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 
 storiesOf("Button", module)
@@ -169,6 +170,25 @@ storiesOf("Appointment", module)
     }
     return <Error {...passProps}/>
   })
+  .add('Form/Create', () => {
+    const passProps = {
+      interviewers,
+      onSave: action('onSave'),
+      onCancel: action('onCancel')
+    }
+    return <Form { ...passProps }/>;
+  })
+  .add('Form/Edit', () => {
+    const passProps = {
+      name: 'Steven Santucchi',
+      interviewer: 5,
+      interviewers,
+      onSave: action('onSave'),
+      onCancel: action('onCancel')
+    }
+    return <Form { ...passProps }/>;
+  })
+  
 
 
 
