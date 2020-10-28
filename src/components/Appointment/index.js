@@ -4,10 +4,10 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 
+
 export default function Appointment(props) {
   const {
     time,
-    student,
     interview,
     onEdit,
     onDelete, 
@@ -18,10 +18,11 @@ export default function Appointment(props) {
     time
   }
 
-  let showProps = {};
+  /* props must be declared even if component they are for won't show */
+  let showProps;
   if (interview) {
     showProps = {
-      student,
+      student: interview.student,
       interviewer : interview.interviewer,
       onEdit,
       onDelete
@@ -29,7 +30,7 @@ export default function Appointment(props) {
   };
   
   const emptyProps = {
-    onAdd,
+    onAdd
   }
 
   return (
