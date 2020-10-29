@@ -24,27 +24,26 @@ export default function Application(props) {
     
     Promise.all([getDays, getAppointments, getInterviewers]).then((all) => {
       const [
-        { data: days },
-        { data: appointments },
-        { data: interviewers }
+        { data: days }, { data: appointments }, { data: interviewers }
       ] = all;
+
       setState(prev => ({...prev, days, appointments, interviewers}));
     }).catch(err => {
       console.log(err);
     });
   }, [])
 
+  /* build schedule, appointment component displaying based on internal appointment state */
+  /* from here interviewers are passed down as array of objects */
+  /* the getInterview function depends on an object not array */
   const appointments = getAppointmentsForDay(state, state.day);
   const schedule = appointments.map(appointment => {
-
     const interview = getInterview(state, appointment.interview);
     const passProps = {
       ...appointment,
-      interview,
       key: appointment.id,
-      onEdit: () => console.log(`Edit: ${appointment.id}`),
-      onDelete: () => console.log(`Delete: ${appointment.id}`),
-      onAdd: () => console.log(`Add: ${appointment.id}`)
+      interview,
+      interviewers: Object.values(state.interviewers)
     }
     return <Appointment {...passProps} />;
   })
