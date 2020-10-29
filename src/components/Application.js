@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 import axios from 'axios';
 
@@ -36,9 +36,11 @@ export default function Application(props) {
 
   const appointments = getAppointmentsForDay(state, state.day);
   const schedule = appointments.map(appointment => {
-    // const interview = getInterviewer(state, appointment.interview);
+
+    const interview = getInterview(state, appointment.interview);
     const passProps = {
       ...appointment,
+      interview,
       key: appointment.id,
       onEdit: () => console.log(`Edit: ${appointment.id}`),
       onDelete: () => console.log(`Delete: ${appointment.id}`),
