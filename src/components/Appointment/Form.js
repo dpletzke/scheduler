@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import InterviewerList from '../InterviewerList';
 import Button from '../Button';
-import { action } from "@storybook/addon-actions";
 
 function reset(setName, setInterviewer) {
   setName("");
