@@ -34,6 +34,19 @@ export default function Application(props) {
     });
   }, [])
 
+  const appointments = getAppointmentsForDay(state, state.day);
+  const schedule = appointments.map(appointment => {
+    // const interview = getInterviewer(state, appointment.interview);
+    const passProps = {
+      ...appointment,
+      key: appointment.id,
+      onEdit: () => console.log(`Edit: ${appointment.id}`),
+      onDelete: () => console.log(`Delete: ${appointment.id}`),
+      onAdd: () => console.log(`Add: ${appointment.id}`)
+    }
+    return <Appointment {...passProps} />;
+  })
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -56,16 +69,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {getAppointmentsForDay(state, state.day).map(appointment => {
-          const passProps = {
-            ...appointment,
-            key: appointment.id,
-            onEdit: () => console.log(`Edit: ${appointment.id}`),
-            onDelete: () => console.log(`Delete: ${appointment.id}`),
-            onAdd: () => console.log(`Add: ${appointment.id}`)
-          }
-          return <Appointment {...passProps} />;
-        })}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
