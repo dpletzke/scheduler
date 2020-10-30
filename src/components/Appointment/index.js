@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 
 import useVisualMode from "../../hooks/useVisualMode.js";
@@ -20,6 +21,8 @@ const EDIT = 'EDIT';
 const SAVING = 'SAVING';
 const DELETING = 'DELETING';
 const CONFIRM = 'CONFIRM';
+const ERROR_SAVE = 'ERROR_SAVE';
+const ERROR_DELETE = 'ERROR_DELETE';
 
 
 export default function Appointment(props) {
@@ -39,26 +42,25 @@ export default function Appointment(props) {
     bookInterview({...interview}, id).then(res => {
       transition(SHOW);
     }).catch(err => {
-      console.log(err);
+      transition(ERROR_SAVE, true);
     });
   }
 
-  const cancel = (id) => {
+  const destroy = (id) => {
 
     transition(DELETING);
     cancelInterview(id).then(res => {
       transition(EMPTY);
     }).catch(err => {
-      console.log(err);
+      transition(ERROR_DELETE, true);
     });
   }
 
-  const headerProps = { time };
   const emptyProps = { onAdd: () => transition(CREATE) };
   const confirmProps = {
     message: 'Are you sure?',
     onCancel: () => back(),
-    onConfirm: () => cancel(id)
+    onConfirm: () => destroy(id)
   }
   const showProps = {
     student: interview ? interview.student : null,
@@ -75,6 +77,10 @@ export default function Appointment(props) {
     onCancel: () => back()
   }
 
+  const closeProps = { onClose: () => back() }
+  const errSaveProps = { ...closeProps, message: 'Error while saving' }
+  const errDeleteProps = { ...closeProps, message: 'Error while deleting' }
+
   const showSlot = (mode) => {
     switch (mode) {
       case EMPTY:     return <Empty {...emptyProps} />;
@@ -84,13 +90,15 @@ export default function Appointment(props) {
       case SAVING:    return <Status message={SAVING} />;
       case CONFIRM:   return <Confirm {...confirmProps} />;
       case DELETING:  return <Status message={DELETING} />;
+      case ERROR_SAVE:  return <Error {...errSaveProps}/>;
+      case ERROR_DELETE:  return <Error {...errDeleteProps} />;
       default: break;
     }
   }
 
   return (
     <article className="appointment">
-      <Header {...headerProps} />
+      <Header time={time} />
       {showSlot(mode)} 
     </article>
   );
