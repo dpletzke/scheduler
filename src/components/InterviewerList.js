@@ -6,7 +6,7 @@ import InterviewerListItem from "components/InterviewerListItem";
 export default function InterviewerList(props) {
   const { interviewers, interviewer, setInterviewer } = props;
    
-  const renderInterviewers = interviewers.map(({ id, name, avatar }) => {
+  const renderInterviewers = Object.values(interviewers).map(({ id, name, avatar }) => {
     const passProps = {
       key:id,
       name, 
