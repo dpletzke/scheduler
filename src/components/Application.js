@@ -31,9 +31,10 @@ export default function Application(props) {
     }).catch(err => {
       console.log(err);
     });
-  }, [])
+  }, []);
 
-  /* build schedule, appointment component displaying based on internal appointment state */
+
+  /* build schedule */
   /* from here interviewers are passed down as array of objects */
   /* the getInterview function depends on an object not array */
   const appointments = getAppointmentsForDay(state, state.day);
@@ -43,7 +44,7 @@ export default function Application(props) {
       ...appointment,
       key: appointment.id,
       interview,
-      interviewers: Object.values(state.interviewers)
+      interviewers: state.interviewers
     }
     return <Appointment {...passProps} />;
   })
