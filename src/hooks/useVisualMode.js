@@ -16,7 +16,7 @@ export default function useVisualMode (initialMode) {
 
   const transition = (newMode, replace = false) => {
     setState(prev => {
-      const adjustedHistory = replace ? prev.history.slice(2) : prev.history;
+      const adjustedHistory = replace ? prev.history.slice(1) : prev.history;
        return {
         mode: newMode,
         history: [newMode, ...adjustedHistory]

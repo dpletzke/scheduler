@@ -38,7 +38,7 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    transition(SAVING);
+    transition(SAVING, true);
     bookInterview({...interview}, id).then(res => {
       transition(SHOW);
     }).catch(err => {
@@ -48,7 +48,7 @@ export default function Appointment(props) {
 
   const destroy = (id) => {
 
-    transition(DELETING);
+    transition(DELETING, true);
     cancelInterview(id).then(res => {
       transition(EMPTY);
     }).catch(err => {
