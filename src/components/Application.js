@@ -38,32 +38,53 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    
-    setState(prev => {
-      // console.log({...prev, appointments})
-      return {...prev, appointments}
+    const url = `http://localhost:8001/api/appointments/${id}`
+    return axios.put(url, { interview }).then(res => {
+      setState(prev => {
+        return {...prev, appointments};
+      });
     });
-
   }
+
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    const url = `http://localhost:8001/api/appointments/${id}`
+    return axios.delete(url).then(res => {
+      setState(prev => {
+        return {...prev, appointments};
+      });
+    });
+  }
+
 
   /* build schedule */
   const appointmentsForToday = getAppointmentsForDay(state, state.day);
   const schedule = appointmentsForToday.map(appointment => {
+
     const interview = getInterview(state, appointment.interview);
+    
     const passProps = {
       ...appointment,
       key: appointment.id,
       interview,
       interviewers: state.interviewers,
-      bookInterview
+      bookInterview,
+      cancelInterview
     }
     return <Appointment {...passProps} />;
-  })
+  });
 
   return (
     <main className="layout">
