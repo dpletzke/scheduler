@@ -16,8 +16,8 @@ export default function Application(props) {
   };
   const [state, setState] = useState(initialState);
   const setDay = day => setState(prev => ({ ...prev, day })); 
-
-  useEffect(()=> {
+ 
+   useEffect(()=> {
     const getDays = axios.get('http://localhost:8001/api/days');
     const getAppointments = axios.get('http://localhost:8001/api/appointments');
     const getInterviewers = axios.get('http://localhost:8001/api/interviewers');
@@ -33,18 +33,34 @@ export default function Application(props) {
     });
   }, []);
 
+  const bookInterview = (interview, id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    setState(prev => {
+      // console.log({...prev, appointments})
+      return {...prev, appointments}
+    });
+
+  }
 
   /* build schedule */
-  /* from here interviewers are passed down as array of objects */
-  /* the getInterview function depends on an object not array */
-  const appointments = getAppointmentsForDay(state, state.day);
-  const schedule = appointments.map(appointment => {
+  const appointmentsForToday = getAppointmentsForDay(state, state.day);
+  const schedule = appointmentsForToday.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     const passProps = {
       ...appointment,
       key: appointment.id,
       interview,
-      interviewers: state.interviewers
+      interviewers: state.interviewers,
+      bookInterview
     }
     return <Appointment {...passProps} />;
   })
