@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
+import { updateAppointments, rectifySpots } from '../helpers';
+
 export default function useApplicationData () {
 
   const initialState = {
@@ -28,38 +30,28 @@ export default function useApplicationData () {
     });
   }, []);
 
-  const bookInterview = (interview, id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    
-    const url = `http://localhost:8001/api/appointments/${id}`
+  const bookInterview = (interview, appointmentId) => {
+
+    const appointments = updateAppointments(state, interview, appointmentId);
+    const days = rectifySpots({ days:state.days, appointments }, appointmentId);
+
+    const url = `http://localhost:8001/api/appointments/${appointmentId}`
     return axios.put(url, { interview }).then(res => {
       setState(prev => {
-        return {...prev, appointments};
+        return {...prev, appointments, days};
       });
     });
   }
 
-  const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+  const cancelInterview = (appointmentId) => {
 
-    const url = `http://localhost:8001/api/appointments/${id}`
+    const appointments = updateAppointments(state, null, appointmentId);
+    const days = rectifySpots({ days:state.days, appointments }, appointmentId);
+
+    const url = `http://localhost:8001/api/appointments/${appointmentId}`
     return axios.delete(url).then(res => {
       setState(prev => {
-        return {...prev, appointments};
+        return {...prev, appointments, days};
       });
     });
   }
