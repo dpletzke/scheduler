@@ -1,4 +1,3 @@
-import action from "@storybook/addon-actions/dist/preview/action";
 import React from "react";
 
 
