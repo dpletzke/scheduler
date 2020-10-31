@@ -1,7 +1,5 @@
-export function getAppointmentsForDay(state, day) {
-  const { days, appointments } = state;
-
-  const today = days.find(d => d.name === day);
+export function getAppointmentsForDay({ days, appointments }, day) {
+  const today = Object.values(days).find(d => d.name === day);
 
   if (!today || !today.appointments) {
     return [];
@@ -30,15 +28,8 @@ export function getInterviewersForDay(state, day) {
   if (!today || !today.appointments) {
     return [];
   } else {
-
-    const todaysInterviewerIds = getAppointmentsForDay(state, day)
-        .filter(({ interview }) => interview)
-        .map(({ interview }) => interview.interviewer);
-
-    const todaysInterviewers = Object.values(interviewers)
-        .filter(({ id }) => todaysInterviewerIds.includes(id));
-
-    return todaysInterviewers;
+    return Object.values(interviewers)
+        .filter(({ id }) => today.interviewers.includes(id));
   }
 }
 
