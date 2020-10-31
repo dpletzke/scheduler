@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+To be used in conjunction with the dev backend API found [here](https://github.com/dpletzke/scheduler-api).
+
 ## Setup
 
 Install dependencies with `npm install`.
