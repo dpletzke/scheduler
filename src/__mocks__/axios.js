@@ -60,13 +60,31 @@ export default {
     const router = {
       'http://localhost:8001/api/days': fixtures.days,
       'http://localhost:8001/api/appointments': fixtures.appointments,
-      'http://localhost:8001/api/interviewers': fixtures.interviewers,
+      'http://localhost:8001/api/interviewers': fixtures.interviewers
     }
 
     return Promise.resolve({
       status: 200,
       statusText: "OK",
       data: router[url]
+    });
+
+  }),
+
+  put: jest.fn(url => {
+
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    });
+
+  }),
+
+  delete: jest.fn(url => {
+
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
     });
 
   })
