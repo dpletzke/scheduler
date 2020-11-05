@@ -6,7 +6,9 @@ To be used in conjunction with the dev backend API found [here](https://github.c
 
 Interview scheduler is a project coded with guidance during the Lighthouse labs Bootcamp. It is written with functional React, developed on a component level with storybook and tested with Jest and Cypress. Backend and styling were provided by the course.
 
+## Project Features
 
+Users can view existing interviews for a week and schedule their own. Users are shown a selection of interviewers for each day. Users can edit or cancel any interview. Interview spots display a in-progress status when saving or deleting. 
 
 ## Final Product
 
