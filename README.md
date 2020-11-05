@@ -8,7 +8,7 @@ Interview scheduler is a project coded with guidance during the Lighthouse labs 
 
 ## Project Features
 
-Users can view existing interviews for a week and schedule their own. Users are shown a selection of interviewers for each day. Users can edit or cancel any interview. Interview spots display a in-progress status when saving or deleting. 
+Users can view existing interviews for a week and schedule their own. Users are shown a selection of interviewers for each day. Users can edit or cancel any interview. Interview spots display a in-progress status when saving or deleting. Data is persistent across sessions. 
 
 ## Final Product
 
