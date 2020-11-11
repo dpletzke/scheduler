@@ -30,9 +30,15 @@ export default function Form(props) {
     setInterviewer
   }
 
-  const validate = () => {
-    if (name === "") {
-      setError("Student name cannot be blank");
+  const validate = (name, interviewer) => {
+    if (name === "" || interviewer === null) {
+
+      const messages = []
+      !name && messages.push('Student name cannot be blank ')
+      !interviewer && messages.push(`
+      ${!name ? 'y' : 'Y'}ou must select an interviewer
+      `);
+      setError(messages.join(' and '));
       return;
     }
     setError(null);
