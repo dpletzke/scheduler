@@ -34,10 +34,11 @@ export default function Form(props) {
     if (name === "" || interviewer === null) {
 
       const messages = []
-      !name && messages.push('Student name cannot be blank ')
-      !interviewer && messages.push(`
-      ${!name ? 'y' : 'Y'}ou must select an interviewer
-      `);
+      if(!name) messages.push('Student name cannot be blank ')
+      if(!interviewer) {
+        messages.push(`${!name ? 'y' : 'Y'}ou must select an interviewer`);
+      }
+      
       setError(messages.join(' and '));
       return;
     }
