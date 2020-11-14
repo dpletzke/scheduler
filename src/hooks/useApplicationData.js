@@ -14,6 +14,7 @@ export default function useApplicationData () {
   const [state, setState] = useState(initialState);
   const setDay = day => setState(prev => ({ ...prev, day })); 
 
+  
   useEffect(()=> {
     const getDays = axios.get('http://localhost:8001/api/days');
     const getAppointments = axios.get('http://localhost:8001/api/appointments');
@@ -23,13 +24,25 @@ export default function useApplicationData () {
       const [
         { data: days }, { data: appointments }, { data: interviewers }
       ] = all;
-
+      
       setState(prev => ({...prev, days, appointments, interviewers}));
     }).catch(err => {
       console.log(err);
     });
-  }, []);
 
+    const ws = new WebSocket('ws://localhost:8001/');
+    ws.onmessage = (event) => {
+      const { interview, id: appointmentId } = JSON.parse(event.data);
+      const appointments = updateAppointments(state, interview, appointmentId);
+      const days = rectifySpots({ days:state.days, appointments }, appointmentId);
+
+      setState(prev => {
+        return {...prev, appointments, days};
+      });    
+    }
+
+  }, []);
+  
   const bookInterview = (interview, appointmentId) => {
 
     const appointments = updateAppointments(state, interview, appointmentId);
